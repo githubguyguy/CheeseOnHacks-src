@@ -274,31 +274,46 @@ task.spawn(function()
 			Icon = "info"
 		}),
 		UniversalFPS = Window:CreateTab({
-			Title = "UniversalFPS",
+			Title = "Universal FPS",
 			Icon = "target"
 		}),
 		othershit = Window:CreateTab({
-			Title = "othershit",
+			Title = "other shit",
 			Icon = "settings"
-		})
+		}),
+		PlayerTab = Window:CreateTab({
+			Title = "Player",
+			Info = "user"
 	}
-
-	Window:Dialog({
-		Title = "please speed i need this",
-		Content = "my cheese kinda crackless",
-		Buttons = {
-			{
-				Title = "...",
-				Callback = function()
-					print("my mom is kinda homeless")
-				end
-			}
-		}
-	})
 
 	Tabs.UniversalFPS:CreateParagraph("Universal", {
 		Title = "Universal FPS",
 		Content = "Universal shit for most FPS games (rivals included)"
+	})
+
+	Tabs.PlayerTab:CreateParagraph("Player", {
+		Title = "Player",
+		Content = "here is all the shit that does player shit like walkspeed, go fish"
+	})
+
+	local flytoggle = Tabs.PlayerTab:CreateToggle("FlyToggle", {
+		Title = "Fly",
+		Default = false,
+		Callback = function(Value)
+			--some fly logic here and yep
+		end
+	})
+
+	local flyslider = Tabs.PlayerTab:CreateSlider("Slider", {
+	    Title = "Fly Speed",
+	    Description = "self explanitory",
+	    Default = 2,
+	    Min = 1,
+	    Max = 20,
+	    Rounding = 1,
+	    Callback = function(Value)
+	        print("Slider was changed:", Value)
+	    end
 	})
 
 	local aimbottoggle = Tabs.UniversalFPS:CreateToggle("AimbotToggle", {
