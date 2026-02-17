@@ -352,6 +352,21 @@ task.spawn(function()
 			loadstring(game:HttpGet(('https://raw.githubusercontent.com/EndOverdosing/Soluna-API/refs/heads/main/rivals-modern.lua'),true))()
 		end
 	})
+	Tabs.UniversalFPS:CreateButton({
+		Title = "Reset ESP".
+		Desription = " ",
+		Callback = function()
+			if espOn then
+				for _,plr in pairs(Players:GetPlayers()) do
+					if plr ~= localPlayer and plr.Character then
+						createESP(plr.Character)
+					end
+				end
+			else
+				clearESP()
+			end
+		end
+	})
 
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
