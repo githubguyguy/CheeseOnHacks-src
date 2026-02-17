@@ -353,7 +353,7 @@ task.spawn(function()
 		end
 	})
 	Tabs.UniversalFPS:CreateButton({
-		Title = "Reset ESP".
+		Title = "Reset ESP",
 		Desription = " ",
 		Callback = function()
 			if espOn then
