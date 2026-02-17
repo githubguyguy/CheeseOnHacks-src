@@ -1,2 +1,2 @@
 # CheeseOnHacks-src
-this is the source of CheeseOnHacks
+i piss thunder and shit lightning. 
