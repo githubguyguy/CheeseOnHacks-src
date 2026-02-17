@@ -284,7 +284,7 @@ task.spawn(function()
 		}),
 		PlayerTab = Window:CreateTab({
 			Title = "Player",
-			Info = "user"
+			Info = "info"
         })
     }
 
