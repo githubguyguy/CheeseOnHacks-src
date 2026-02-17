@@ -253,6 +253,7 @@ Players.PlayerAdded:Connect(onPlayer)
 --------------------------------------------------
 
 task.spawn(function()
+
 	local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
 	local SaveManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/SaveManager.luau"))()
 	local InterfaceManager = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/ActualMasterOogway/Fluent-Renewed/master/Addons/InterfaceManager.luau"))()
@@ -284,7 +285,8 @@ task.spawn(function()
 		PlayerTab = Window:CreateTab({
 			Title = "Player",
 			Info = "user"
-	}
+        })
+    }
 
 	Tabs.UniversalFPS:CreateParagraph("Universal", {
 		Title = "Universal FPS",
