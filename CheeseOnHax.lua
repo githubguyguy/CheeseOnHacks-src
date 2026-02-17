@@ -284,7 +284,7 @@ task.spawn(function()
 		}),
 		PlayerTab = Window:CreateTab({
 			Title = "Player",
-			Info = "info"
+			Icon = "user"
         })
     }
 
@@ -360,6 +360,6 @@ task.spawn(function()
 	})
 end)
 
-
+--coolio
 
 
