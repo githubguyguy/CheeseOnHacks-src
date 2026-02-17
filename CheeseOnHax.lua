@@ -338,14 +338,14 @@ task.spawn(function()
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
 
-	Tabs.solunastuff:CreateButton("99nights", {
+	Tabs.solunastuff:CreateButton({
 		Title = "Load 99 nights in the forest",
 		Description = "Key (case sensitive) = EndOverdosing",
 		Callback = function()
 			loadstring(game:HttpGet(('https://raw.githubusercontent.com/EndOverdosing/Soluna-API/refs/heads/main/99-Nights-in-the-Forest.lua'),true))()
 		end
 	})
-	Tabs.solunastuff:CreateButton("RivalsModern", {
+	Tabs.solunastuff:CreateButton({
 		Title = "Rivals Modern",
 		Description = "no key",
 		Callback = function()
