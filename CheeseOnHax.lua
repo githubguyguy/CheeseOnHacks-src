@@ -232,20 +232,6 @@ RunService.RenderStepped:Connect(function()
 			head.Position
 		)
 
-	local camera = workspace.CurrentCamera
-	local direction = Vector3.zero
-
-	if flying then
-		if UIS:IsKeyDown(Enum.KeyCode.W) then direction += camera.CFrame.LookVector end
-		if UIS:IsKeyDown(Enum.KeyCode.S) then direction -= camera.CFrame.LookVector end
-		if UIS:IsKeyDown(Enum.KeyCode.D) then direction += camera.CFrame.RightVector end
-		if UIS:IsKeyDown(Enum.KeyCode.A) then direction -= camera.CFrame.RightVector end
-		if UIS:IsKeyDown(Enum.KeyCode.E) then direction += Vector3.new(0, 1, 0) end
-		if UIS:IsKeyDown(Enum.KeyCode.Q) then direction -= Vector3.new(0, 1, 0) end
-
-		bv.Velocity = if direction.Magnitude > 0 then direction.Unit * flyspeed else Vector3.zero
-	end
-
 end)
 
 --------------------------------------------------
