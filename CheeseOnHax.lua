@@ -4,6 +4,11 @@ local RunService = game:GetService("RunService")
 local localPlayer = Players.LocalPlayer
 local camera = workspace.CurrentCamera
 
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local rootPart = character:WaitForChild("HumanoidRootPart")
+
 --------------------------------------------------
 -- SETTINGS (DEFINED FIRST)
 --------------------------------------------------
@@ -13,9 +18,11 @@ local aimbotEnabled = false
 local aiming = false
 local ignoreFriends = false
 local target = nil
+local flying = false
 
 local espObjects = {}
 local SWAP_RADIUS = 500
+local flyspeed = 2
 
 local DefaultSettings = {
 	AutoLoadEnabled = false,
@@ -224,6 +231,21 @@ RunService.RenderStepped:Connect(function()
 			camera.CFrame.Position,
 			head.Position
 		)
+
+	local camera = workspace.CurrentCamera
+	local direction = Vector3.zero
+
+	if flying then
+		if UIS:IsKeyDown(Enum.KeyCode.W) then direction += camera.CFrame.LookVector end
+		if UIS:IsKeyDown(Enum.KeyCode.S) then direction -= camera.CFrame.LookVector end
+		if UIS:IsKeyDown(Enum.KeyCode.D) then direction += camera.CFrame.RightVector end
+		if UIS:IsKeyDown(Enum.KeyCode.A) then direction -= camera.CFrame.RightVector end
+		if UIS:IsKeyDown(Enum.KeyCode.E) then direction += Vector3.new(0, 1, 0) end
+		if UIS:IsKeyDown(Enum.KeyCode.Q) then direction -= Vector3.new(0, 1, 0) end
+
+		bv.Velocity = if direction.Magnitude > 0 then direction.Unit * flyspeed else Vector3.zero
+	end
+
 end)
 
 --------------------------------------------------
@@ -357,6 +379,7 @@ task.spawn(function()
 		Desription = " ",
 		Callback = function()
 			if espOn then
+				clearESP()
 				for _,plr in pairs(Players:GetPlayers()) do
 					if plr ~= localPlayer and plr.Character then
 						createESP(plr.Character)
@@ -367,6 +390,29 @@ task.spawn(function()
 			end
 		end
 	})
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+
+	local espcolorpicker = Tabs.UniversalFPS:CreateColorpicker("ColorPicker", {
+		Title = "ESP color",
+    	Default = Color3.fromRGB(255, 0, 0)
+	})
+
 
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
