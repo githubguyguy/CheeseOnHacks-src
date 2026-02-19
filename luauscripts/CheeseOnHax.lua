@@ -214,6 +214,55 @@ UIS.InputEnded:Connect(function(input,gp)
 end)
 
 --------------------------------------------------
+-- WALL CHECK (VISIBILITY)
+--------------------------------------------------
+
+local function isTargetVisible(targetHead)
+	if not targetHead then return false end
+	
+	local camera = workspace.CurrentCamera
+	local camPos = camera.CFrame.Position
+	local targetPos = targetHead.Position
+	
+	-- Simple line-of-sight check: cast many rays in a cone around direct path
+	local direction = (targetPos - camPos).Unit
+	local distance = (targetPos - camPos).Magnitude
+	
+	-- Check direct line
+	local blocked = false
+	for i = 1, 3 do
+		local offset = Vector3.new(
+			(math.random() - 0.5) * 0.5,
+			(math.random() - 0.5) * 0.5,
+			(math.random() - 0.5) * 0.5
+		)
+		
+		-- Manual raycast simulation - move in steps
+		local step = camPos + (direction * distance)
+		local checkParts = workspace:FindPartBoundsInRadius(step, distance)
+		
+		for _, part in pairs(checkParts) do
+			if part:IsDescendantOf(targetHead.Parent) or part:IsDescendantOf(localPlayer.Character) then
+				continue
+			end
+			if part.Transparency >= 0.5 then
+				continue
+			end
+			
+			local partDist = (part.Position - camPos).Magnitude
+			if partDist < distance - 5 then
+				blocked = true
+				break
+			end
+		end
+		
+		if blocked then break end
+	end
+	
+	return not blocked
+end
+
+--------------------------------------------------
 -- AIMBOT LOOP
 --------------------------------------------------
 
@@ -226,6 +275,11 @@ RunService.RenderStepped:Connect(function()
 	
 	local head = target:FindFirstChild("Head")
 	if not head then return end
+	
+	-- Check if target head is visible (wall check)
+	if wallcheck and not isTargetVisible(head) then
+		return
+	end
 	
 	camera.CFrame =
 		CFrame.new(
@@ -286,13 +340,13 @@ task.spawn(function()
 		checks = Window:CreateTab({
 			Title = "Checks",
 			Icon = "shield-check"
-		})
+		}),
 		UniversalFPS = Window:CreateTab({
 			Title = "Universal FPS",
 			Icon = "target"
 		}),
 		othershit = Window:CreateTab({
-			Title = "other shit",
+			Title = "Settings",
 			Icon = "settings"
 		}),
 		PlayerTab = Window:CreateTab({
@@ -306,6 +360,11 @@ task.spawn(function()
 
     }
 	local Options = Library.Options
+	
+	-- Initialize SaveManager
+	SaveManager:SetLibrary(Library)
+	SaveManager:IgnoreThemeSettings()
+	SaveManager:SetIgnoreIndexes({})
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
@@ -481,22 +540,18 @@ task.spawn(function()
 
 	Tabs.othershit:CreateButton({
 		Title = "Load Infinite Yield",
-		Description = "Load it loads infinite yield. what more could there be",
+		Description = " ",
 		Callback = function()
 			loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
 		end
 	})
 
 	SaveManager:SetFolder("CheeseOnHacks")
-	Tabs.othershit:CreateButton({
-		Title = "Save Config",
-		Callback = function()
-			
-		end
-	})
+	InterfaceManager:BuildInterfaceSection(Tabs.othershit)
+	SaveManager:BuildConfigSection(Tabs.othershit)
 
 end)
 
---coolio
+	SaveManager:LoadAutoloadConfig()
 
 
