@@ -17,6 +17,7 @@ local espOn = false
 local aimbotEnabled = false
 local aiming = false
 local ignoreFriends = false
+local wallcheck = false
 local target = nil
 local flying = false
 
@@ -282,6 +283,10 @@ task.spawn(function()
 			Title = "Info",
 			Icon = "info"
 		}),
+		checks = Window:CreateTab({
+			Title = "Checks",
+			Icon = "shield-check"
+		})
 		UniversalFPS = Window:CreateTab({
 			Title = "Universal FPS",
 			Icon = "target"
@@ -298,7 +303,9 @@ task.spawn(function()
 			Title = "Soluna",
 			Icon = "radar"
         })
+
     }
+	local Options = Library.Options
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------------------------------
@@ -456,11 +463,19 @@ task.spawn(function()
 		end
 	})
 
-	local friendcheck = Tabs.UniversalFPS:CreateToggle("FriendCheck", {
+	local friendcheck = Tabs.checks:CreateToggle("FriendCheck", {
 		Title = "Friend Check",
 		Default = false,
 		Callback = function(Value)
 			ignoreFriends = Value
+		end
+	})
+
+	local wallcheck = Tabs.checks:CreateToggle("WallCheck", {
+		Title = "Wall Check",
+		Default = false,
+		Callback = function(Value)
+			wallcheck = Value
 		end
 	})
 
@@ -471,6 +486,15 @@ task.spawn(function()
 			loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
 		end
 	})
+
+	SaveManager:SetFolder("CheeseOnHacks")
+	Tabs.othershit:CreateButton({
+		Title = "Save Config",
+		Callback = function()
+			
+		end
+	})
+
 end)
 
 --coolio
